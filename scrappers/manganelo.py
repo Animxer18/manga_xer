@@ -4,15 +4,15 @@ import json
 
 class manganelo:
   def __init__(self):
-    self.base_url = "https://ww6.manganelo.tv/"
+    self.base_url = "https://mangabuddy.com"
 
   def search(query): 
-    r = requests.get(f"https://ww6.manganelo.tv/search/{query}").text
+    r = requests.get(f"https://mangabuddy.com/search/{query}").text
     soup = bs(r, 'html.parser')
     html = soup.select(".panel-search-story .search-story-item")
     data = '{"data": ['
     for item in html:
-      img = "https://ww6.manganelo.tv"+item.find("img")["src"]
+      img = "https://mangabuddy.com/"+item.find("img")["src"]
       title = item.find("img")["alt"]
       link = item.find("a")["href"].replace("/manga/","")
       info = "{" + f'"img" :"{img}", "title": "{title}", "id": "{link}"'+ "},"
@@ -28,7 +28,7 @@ class manganelo:
 
   # returns all chapters name and list from mangaLink
   def getChapters(link): 
-    r = requests.get("https://ww6.manganelo.tv/manga/"+link).text
+    r = requests.get("https://mangabuddy.com/manga/"+link).text
     soup = bs(r, 'html.parser')
     html = soup.select("a.chapter-name")
     data = '{"data": ['
@@ -42,7 +42,7 @@ class manganelo:
 
   # returns the list of mangaJpgs
   def getManga(url): 
-    r = requests.get("https://ww6.manganelo.tv/"+url).text
+    r = requests.get("https://mangabuddy.com/"+url).text
     soup = bs(r, 'html.parser')
     html = soup.select(".container-chapter-reader img")
     imgs = []
@@ -51,6 +51,6 @@ class manganelo:
     return imgs
 
 
-#print(manganelo.getManga("/chapter/manga-ng952689/chapter-1"))
-#print(getManga("https://ww5.manganelo.tv/chapter/manga-gi983965/chapter-6"))
+#print(mangabuddy.getManga("/chapter/manga-ng952689/chapter-1"))
+#print(getManga("https://mangabuddy.com/chapter/manga-gi983965/chapter-6"))
 
